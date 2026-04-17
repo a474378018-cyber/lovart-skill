@@ -193,7 +193,7 @@ The API enforces per-account request frequency limits:
 
 These are **API-level** rate limits on how often you can call any endpoint, independent of generation mode. If exceeded, requests will be throttled.
 
-This is separate from **generation concurrency** — you can only run one generation task at a time. If a task is already running, new `chat`/`send` requests will be rejected until it finishes.
+This is separate from **generation concurrency** — each thread can only run one generation task at a time. If a task is already running in a thread, new requests to that thread will be rejected until it finishes. You can run tasks in different threads concurrently.
 
 The skill auto-retries on transient network errors (3 attempts with backoff), but rate limit and billing errors are returned immediately.
 
