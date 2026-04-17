@@ -182,6 +182,21 @@ python3 agent_skill.py query-mode
 
 This is a persistent server-side setting, not a prompt keyword.
 
+## 🚦 Rate limits
+
+The API enforces per-account request frequency limits:
+
+| Window | Default limit |
+|--------|--------------|
+| Per minute | 60 requests |
+| Per hour | 600 requests |
+
+These are **API-level** rate limits on how often you can call any endpoint, independent of generation mode. If exceeded, requests will be throttled.
+
+This is separate from **generation concurrency** — you can only run one generation task at a time. If a task is already running, new `chat`/`send` requests will be rejected until it finishes.
+
+The skill auto-retries on transient network errors (3 attempts with backoff), but rate limit and billing errors are returned immediately.
+
 ## 💾 Local state
 
 Settings and thread history are persisted at `~/.lovart/state.json`:
